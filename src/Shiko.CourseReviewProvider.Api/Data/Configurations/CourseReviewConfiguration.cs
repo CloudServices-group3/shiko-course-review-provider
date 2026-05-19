@@ -43,4 +43,4 @@ public sealed class CourseReviewConfiguration : IEntityTypeConfiguration<CourseR
 
         builder.HasIndex(review => review.CourseId);
     }
-}git status
+}
