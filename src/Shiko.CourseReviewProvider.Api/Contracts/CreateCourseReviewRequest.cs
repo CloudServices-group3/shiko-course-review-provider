@@ -3,7 +3,7 @@
 namespace Shiko.CourseReviewProvider.Api.Contracts;
 
 public sealed record CreateCourseReviewRequest(
-    [property: Required]
-    [property: StringLength(1500, MinimumLength = 1)]
+    [param: Required]
+    [param: StringLength(1500, MinimumLength = 1)]
     string Text
 );
