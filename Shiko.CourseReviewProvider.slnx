@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Shiko.CourseReviewProvider.Api/Shiko.CourseReviewProvider.Api.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Shiko.CourseReviewProvider.Api.IntegrationTests/Shiko.CourseReviewProvider.Api.IntegrationTests.csproj" />
+  </Folder>
 </Solution>
