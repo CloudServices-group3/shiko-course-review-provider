@@ -93,7 +93,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "http://localhost:3000",
-                "https://localhost:3000"
+                "https://localhost:3000",
+                "https://shiko-frontend-silk.vercel.app "
             )
             .AllowAnyHeader()
             .AllowAnyMethod();
