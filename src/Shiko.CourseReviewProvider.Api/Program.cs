@@ -130,5 +130,3 @@ app.MapGet("/health", () =>
     .WithTags("Health");
 
 app.Run();
-
-public partial class Program;
