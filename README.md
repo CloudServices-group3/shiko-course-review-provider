@@ -59,7 +59,7 @@ Expected behavior:
 * `200 OK` means the user has rated the course
 * `404 Not Found` means the user has not rated the course
 * `401 Unauthorized` or `403 Forbidden` means the token is missing, invalid or not accepted
-* other errors mean the rating provider could not be verified
+* other errors mean that Course Review Provider cannot verify the rating at that moment
 
 This keeps the providers separated. Course Review Provider does not read the Course Rating Provider database directly.
 
@@ -91,11 +91,9 @@ DELETE soft-deletes the logged-in user's review.
 
 ## Local config
 
-Local development uses SQL Server LocalDB.
+Set the database connection string with user secrets:
 
-The local database connection string is stored in `appsettings.Development.json`:
-
-ConnectionStrings:CourseReviewDatabase
+dotnet user-secrets set "ConnectionStrings:CourseReviewDatabase" "your-connection-string" --project .\src\Shiko.CourseReviewProvider.Api
 
 Set JWT config with user secrets:
 
@@ -113,9 +111,13 @@ dotnet user-secrets set "CourseRatingProvider:BaseUrl" "https://shiko-course-rat
 
 Azure Web App uses environment variables and app settings.
 
-The database connection string is stored as:
+If the database connection string is stored under Azure Connection strings, the name is:
 
 CourseReviewDatabase
+
+If it is stored as a normal application setting, the key is:
+
+ConnectionStrings__CourseReviewDatabase
 
 JWT app settings are stored as:
 
@@ -174,9 +176,11 @@ dotnet test
 
 ## Notes
 
-Course Review Provider is separate from Course Rating Provider so one provider can fail without directly crashing the other provider's database or schema.
+Course Review Provider is separate from Course Rating Provider so one provider can fail without directly affecting the other provider's database or schema.
 
-Review creation and update verify rating through HTTP instead of a shared database relationship. This is a school-level microservice compromise that keeps provider ownership clear.
+Review creation and update verify rating through HTTP instead of a shared database relationship. This keeps provider ownership clear.
+
+The shared Azure SQL resource is a school-level cost compromise. The providers still keep their own schemas and do not use direct database relationships between each other.
 
 Reviews use soft delete. When a user deletes a review, the row stays in the database but is marked as deleted and no longer returned as the active review.
 
